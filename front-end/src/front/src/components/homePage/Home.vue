@@ -13,7 +13,6 @@
               <h1 class="display-3">Hello World</h1>
               <p class="lead">This is the homepage of our website</p>
             </div>
-            <Table_for_tasks/>
         </b-col>
       </b-row>
   </div>
@@ -23,7 +22,6 @@
 <script>
   import Navbar from "../Navbar";
   import Menu from "../Menu";
-  import Table_for_tasks from "./Table_for_tasks";
 
   export default {
     name: 'home',
@@ -31,7 +29,7 @@
     data() {
       return {}
     },
-    components: {Table_for_tasks, Menu, Navbar},
+    components: {Menu, Navbar},
     methods: {
       getPage() {
         this.pageName = this.$router.params.pageName
