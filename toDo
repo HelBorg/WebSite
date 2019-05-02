@@ -1,0 +1,4 @@
+1. TaskSkillController может в TaskSkillDTO засунуть taskId?
+В конце концов тогда TaskSkill и TaskSkillDTO будут совпдать.
+
+2.AuthenticationRequest это модель

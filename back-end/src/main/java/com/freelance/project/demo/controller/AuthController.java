@@ -4,6 +4,8 @@ import com.freelance.project.demo.config.security.jwt.JwtTokenProvider;
 import com.freelance.project.demo.models.Person;
 import com.freelance.project.demo.repository.PersonRepository;
 import com.freelance.project.demo.service.PersonService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,9 +36,11 @@ public class AuthController {
     @Autowired
     PersonService personService;
 
+    private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
 
     @PostMapping("/singin")
     public ResponseEntity signin(@RequestBody AuthenticationRequest credentials) {
+        logger.info("Request to sign in: credentials - {}", credentials);
         try {
             String email = credentials.getEmail();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, credentials.getPassword()));
@@ -54,6 +58,7 @@ public class AuthController {
     @GetMapping("/me")
     public ResponseEntity currentUser(@AuthenticationPrincipal UserDetails userDetails){
         // careful!!! in custom userDetails username is EMAIL
+        logger.info("Request to get current user: {}", userDetails);
         Person currentPerson = personService.findByEmail(userDetails.getUsername());
         Map<Object, Object> model = new HashMap<>();
         model.put("name", currentPerson.getName());

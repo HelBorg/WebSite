@@ -1,7 +1,7 @@
 <template>
   <div id="skills">
     <h5 class="lead">
-      Nessesary skills
+      Necessary skills
     </h5>
     <div v-if="status === 'IN_DESIGN'" >
     <b-form-select v-model="skill_name" class="mb-3">

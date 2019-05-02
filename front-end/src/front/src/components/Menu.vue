@@ -1,7 +1,8 @@
 <template>
-  <div id="menu" style="float: left;width:29%">
-    <div class="container-fluid ">
-      <b-list-group >
+  <div id="menu"
+       style="float: left;width:29%"
+       class="container-fluid ">
+      <b-list-group title="Menu">
         <b-list-group-item :to="'tasks/mine'">
           Mine
         </b-list-group-item>
@@ -22,7 +23,6 @@
       <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
       </main>
     </div>
-  </div>
 </template>
 
 <script>

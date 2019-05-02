@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../components/Home'
+import Home from '../components/homePage/Home'
 import SingUp from '../components/SingUp'
 import Task from '../components/Task/Task'
 import Login from '../components/Login'
 import store from '../store'
 import * as types from '../store/mutation-types'
-import Tasks from "../components/Tasks"
+import Tasks from "../components/Tasks/Tasks"
 
 const hasToken = (to, from, next) => {
   const token = localStorage.getItem('JWT')
@@ -54,7 +54,6 @@ const router = new Router({
       path: '/task/:id',
       name: 'Task',
       component: Task,
-
     },
     {
       path: '/user',

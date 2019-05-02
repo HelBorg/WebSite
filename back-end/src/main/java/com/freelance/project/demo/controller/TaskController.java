@@ -28,20 +28,19 @@ public class TaskController {
     @Autowired
     PersonService personService;
 
-    @Autowired
-    private DozerBeanMapper mapper;
-
-    protected static final Logger logger = LoggerFactory.getLogger(TaskController.class);
+    private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
 
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id){
+        logger.info("Request to delete task: id - {}", id);
         taskService.deleteTask(id);
     }
 
 
     @PostMapping("/new")
     public ResponseEntity create(@AuthenticationPrincipal UserDetails userDetails){
+        logger.info("Request to create task from user: {}", userDetails);
         Task createdTask = taskService.createNew(personService.findByEmail(userDetails.getUsername()));
         Map<Object, Object> model = new HashMap<>();
         model.put("id", createdTask.getTaskId());
@@ -50,19 +49,21 @@ public class TaskController {
 
     @PostMapping("/update/status/{id}/{status}")
     public String updateStatus(@PathVariable int id, @PathVariable String status){
+        logger.info("Request to update task status: task id - {}, new status - {}", id, status);
         return taskService.updateStatus(id,status);
     }
 
 
     @PostMapping("/update/assigned/{taskId}/{userId}")
     public void updateAssignedUser(@PathVariable int taskId, @PathVariable int userId){
+        logger.info("Request to update task's assigned user: user id - {}", userId);
         taskService.updateAssignedUser(userId,taskId);
     }
 
     @GetMapping("/{id}")
     public TaskDTO getTaskById(@PathVariable int id) {
+        logger.info("Request to get task by id: id - {}", id);
        return taskService.loadTask(id);
-
     }
 
 
@@ -79,7 +80,7 @@ public class TaskController {
 
     @PostMapping
     public void updateTask(@RequestBody TaskDTO task){
-        System.out.println(task);
+        logger.info("Request to update task: {}", task);
         taskService.updateTask(task);
     }
 

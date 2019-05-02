@@ -1,15 +1,16 @@
 <template>
-  <div id="container">
+  <div id="tasksList"
+  v-show="show">
     <div>
       <Navbar/>
     </div>
     <div>
-      <b-row>
-      <b-col style="width:25%">
+      <div>
         <Menu/>
-      </b-col>
-      <b-col style="width:">
-        <b-card title="Tasks">
+      </div>
+
+<!--        <b-card title="Tasks">-->
+        <b-container>
           <div>
             <b-table id="tasks"
                      title="Tasks"
@@ -20,6 +21,7 @@
             >
             </b-table>
           </div>
+        </b-container>
 
 <!--          Pagination-->
           <div v-if="getTasks.pagesCount>1">
@@ -50,103 +52,103 @@
               Last
             </b-button>
           </div>
-        </b-card>
-      </b-col>
+<!--        </b-card>-->
+
 
         <!--    Filter-->
-        <b-col>
-          <b-card title="Filter">
-          <div v-if="page.showFilter">
-            <b-form @submit="onSubmit" @reset="onReset">
+<!--        <b-col>-->
+<!--          <b-card title="Filter">-->
+<!--          <div v-if="page.showFilter">-->
+<!--            <b-form @submit="onSubmit" @reset="onReset">-->
 
-              <b-form-group id="input-group-1" label-cols-sm="3" label="Name" class="mb-0">
-                <b-input-group>
-                  <b-form-input v-model="editFilter.name" placeholder="Type to Search"></b-form-input>
-                  <b-input-group-append>
-                    <b-button :disabled="!editFilter.name" @click="editFilter.name = ''">Clear</b-button>
-                  </b-input-group-append>
-                </b-input-group>
-              </b-form-group>
+<!--              <b-form-group id="input-group-1" label-cols-sm="3" label="Name" class="mb-0">-->
+<!--                <b-input-group>-->
+<!--                  <b-form-input v-model="editFilter.name" placeholder="Type to Search"></b-form-input>-->
+<!--                  <b-input-group-append>-->
+<!--                    <b-button :disabled="!editFilter.name" @click="editFilter.name = ''">Clear</b-button>-->
+<!--                  </b-input-group-append>-->
+<!--                </b-input-group>-->
+<!--              </b-form-group>-->
 
-              <b-form-group id="input-group-2" label="Date of creation:" label-for="input-2">
-                <b-form aria-label="From:">
-                  From:
-                    <datepicker v-model="editFilter.date_from"
-                                style="float: right; margin-left: 50px"
-                                monday-first=true>
-                    </datepicker>
-                </b-form>
-                <b-form aria-label="To:">
-                  To:
-                    <datepicker v-model="editFilter.date_to"
-                                style="float: right; margin-bottom: 10px; margin-left: 50px"
-                                monday-first=true>
-                    </datepicker>
-                </b-form>
-              </b-form-group>
-
-
-              <b-form-group id="input-group-3" label="Skills:" label-for="input-3">
-                <b-container fluid v-for="(skill,index) in editFilter.skillsF">
-                  <b-row>
-                    <b-col>
-                      <b-form-select
-                        id="input-{{index}}"
-                        v-model="editFilter.selectedSkill">
-                        <option v-for="skill in getSkills.skills">
-                          {{skill.name}}
-                        </option>
-                      </b-form-select>
-                    </b-col>
-                    <b-col cols="3"> Value: {{skill.value}}
-                    </b-col>
-                    <b-col cols='1'>
-                      <b-button @click="deleteSkill(index)" variant="primary"> - </b-button>
-                    </b-col>
-                  </b-row>
-                  <b-row>
-                    <b-col>
-                      <b-form-input id="skill-range-{{skill.name}}" v-model="skill.value" type="range" min="0"
-                                    max="10"></b-form-input>
-                    </b-col>
-                    <b-col cols="1"></b-col>
-                  </b-row>
-                  <b-row>
-                    <h1>
-                    </h1>
-                  </b-row>
-                </b-container>
-              </b-form-group>
+<!--              <b-form-group id="input-group-2" label="Date of creation:" label-for="input-2">-->
+<!--                <b-form aria-label="From:">-->
+<!--                  From:-->
+<!--                    <datepicker v-model="editFilter.date_from"-->
+<!--                                style="float: right; margin-left: 50px"-->
+<!--                                monday-first=true>-->
+<!--                    </datepicker>-->
+<!--                </b-form>-->
+<!--                <b-form aria-label="To:">-->
+<!--                  To:-->
+<!--                    <datepicker v-model="editFilter.date_to"-->
+<!--                                style="float: right; margin-bottom: 10px; margin-left: 50px"-->
+<!--                                monday-first=true>-->
+<!--                    </datepicker>-->
+<!--                </b-form>-->
+<!--              </b-form-group>-->
 
 
-              <b-form-group id="input-group-4" label="Author:" label-for="input-4">
-                <b-form-select multiple v-model="selected" :select-size="4" @click="select">
-                  <option v-for="user in getUsers.users"
-                          @click="select(user)"
-                          :aria-pressed.sync="user.state">
-                    {{user.name}}
-                  </option>
-                </b-form-select>
-              </b-form-group>
+<!--              <b-form-group id="input-group-3" label="Skills:" label-for="input-3">-->
+<!--                <b-container fluid v-for="(skill,index) in editFilter.skillsF">-->
+<!--                  <b-row>-->
+<!--                    <b-col>-->
+<!--                      <b-form-select-->
+<!--                        id="input-{{index}}"-->
+<!--                        v-model="editFilter.selectedSkill">-->
+<!--                        <option v-for="skill in getSkills.skills">-->
+<!--                          {{skill.name}}-->
+<!--                        </option>-->
+<!--                      </b-form-select>-->
+<!--                    </b-col>-->
+<!--                    <b-col cols="3"> Value: {{skill.value}}-->
+<!--                    </b-col>-->
+<!--                    <b-col cols='1'>-->
+<!--                      <b-button @click="deleteSkill(index)" variant="primary"> - </b-button>-->
+<!--                    </b-col>-->
+<!--                  </b-row>-->
+<!--                  <b-row>-->
+<!--                    <b-col>-->
+<!--                      <b-form-input id="skill-range-{{skill.name}}" v-model="skill.value" type="range" min="0"-->
+<!--                                    max="10"></b-form-input>-->
+<!--                    </b-col>-->
+<!--                    <b-col cols="1"></b-col>-->
+<!--                  </b-row>-->
+<!--                  <b-row>-->
+<!--                    <h1>-->
+<!--                    </h1>-->
+<!--                  </b-row>-->
+<!--                </b-container>-->
+<!--              </b-form-group>-->
 
-              <b-button type="submit" variant="primary">Submit</b-button>
-              <b-button type="addSkill" variant="success" v-on:click="addSkill">Add Skill</b-button>
-              <b-button type="reset" variant="danger">Reset</b-button>
-            </b-form>
-          </div>
-          </b-card>
-        </b-col>
 
-      </b-row>
+<!--              <b-form-group id="input-group-4" label="Author:" label-for="input-4">-->
+<!--                <b-form-select multiple v-model="selected" :select-size="4" @click="select">-->
+<!--                  <option v-for="user in getUsers.users"-->
+<!--                          @click="select(user)"-->
+<!--                          :aria-pressed.sync="user.state">-->
+<!--                    {{user.name}}-->
+<!--                  </option>-->
+<!--                </b-form-select>-->
+<!--              </b-form-group>-->
+
+<!--              <b-button type="submit" variant="primary">Submit</b-button>-->
+<!--              <b-button type="addSkill" variant="success" v-on:click="addSkill">Add Skill</b-button>-->
+<!--              <b-button type="reset" variant="danger">Reset</b-button>-->
+<!--            </b-form>-->
+<!--          </div>-->
+<!--          </b-card>-->
+<!--        </b-col>-->
+
+
+      <div><Filter :show="page.showFilter"/></div>
     </div>
   </div>
 </template>
 
 <script>
-  import Menu from "./Menu";
-  import Navbar from "./Navbar";
-  import axios from 'axios';
-  import Datepicker from 'vuejs-datepicker';
+  import Menu from "../Menu";
+  import Navbar from "../Navbar";
+  import axios from 'axios/index';
 
   export default {
     name: "Tasks",
