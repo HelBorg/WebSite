@@ -40,6 +40,7 @@
                             @changePage="changePage"/>
             </div>
           </b-col>
+          <div>{{page.user}}</div>
 
             <b-col cols="4"
                    v-if="page.get==='search'">
@@ -70,10 +71,12 @@
           name: null,
           get: null,   //get all tasks, get by author, by candidates
           showFilter: true,
-          user_id: 1,
+          user_id: null,
           currentPage: 0,
-          pageSize: 10
+          pageSize: 10,
+          user: null
         },
+        user_id: null,
         sort: 'taskId',
         sortDir: 'asc',
         getTasks: {},
@@ -96,7 +99,7 @@
               size: this.page.pageSize,
               page: this.page.currentPage,
               pageName: this.page.get,
-              id: this.page.user_id,
+              id: this.user_id,
               find_name: this.filter.find_name,
               sortDir: this.sortDir,
               sort: this.sort,
@@ -161,8 +164,9 @@
         ).then(response => {
           console.log(response.data);
           if (response) {
-            this.page.user_id = response.data.id
+            this.user_id = response.data.id;
           }
+          this.refreshList();
         }).catch(e => {
           this.errors.push(e);
           console.log(e);
@@ -184,7 +188,6 @@
     mounted() {
       this.getUserId();
       this.extractPageParam();
-      this.refreshList();
     }
   };
 </script>
